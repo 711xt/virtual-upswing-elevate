@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { useReveal } from "@/hooks/use-reveal";
 
 const steps = [
   {
@@ -19,42 +19,37 @@ const steps = [
 ];
 
 export default function HowItWorks() {
+  const heading = useReveal<HTMLDivElement>();
+  const list = useReveal<HTMLDivElement>({ threshold: 0.1 });
+
   return (
     <section id="process" className="relative px-6 py-32 md:py-40">
       <div className="mx-auto max-w-6xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6 }}
-          className="mb-20 max-w-2xl"
+        <div
+          ref={heading.ref}
+          className={`mb-20 max-w-2xl transition-all duration-700 ease-out ${
+            heading.visible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-12"
+          }`}
         >
           <p className="mb-4 text-xs uppercase tracking-[0.3em] text-brand-lime">Process</p>
-          <h2 className="text-4xl font-semibold leading-tight md:text-6xl">
-            How we work.
-          </h2>
-        </motion.div>
+          <h2 className="text-4xl font-semibold leading-tight md:text-6xl">How we work.</h2>
+        </div>
 
-        <div className="relative">
-          {/* connecting line */}
-          <motion.div
-            initial={{ scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            style={{ transformOrigin: "top" }}
-            className="absolute left-[15px] top-2 hidden h-[calc(100%-2rem)] w-px bg-gradient-to-b from-brand-teal via-brand-lime to-transparent md:block"
+        <div ref={list.ref} className="relative">
+          <div
+            className={`absolute left-[15px] top-2 hidden h-[calc(100%-2rem)] w-px bg-gradient-to-b from-brand-teal via-brand-lime to-transparent md:block origin-top transition-transform duration-1000 ease-out ${
+              list.visible ? "scale-y-100" : "scale-y-0"
+            }`}
           />
 
           <div className="space-y-16 md:space-y-24">
             {steps.map((s, i) => (
-              <motion.div
+              <div
                 key={s.n}
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.6, delay: i * 0.15, ease: "easeOut" }}
-                className="grid gap-6 md:grid-cols-[80px_1fr] md:gap-12"
+                style={{ transitionDelay: list.visible ? `${i * 200}ms` : "0ms" }}
+                className={`grid gap-6 md:grid-cols-[80px_1fr] md:gap-12 transition-all duration-700 ease-out ${
+                  list.visible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
+                }`}
               >
                 <div className="relative flex items-start">
                   <div className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full border border-brand-teal bg-black">
@@ -66,7 +61,7 @@ export default function HowItWorks() {
                   <h3 className="mt-2 text-3xl font-semibold md:text-4xl">{s.title}</h3>
                   <p className="mt-4 text-base leading-relaxed text-white/60">{s.body}</p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
