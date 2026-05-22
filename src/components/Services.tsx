@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { useReveal } from "@/hooks/use-reveal";
 
 const services = [
   {
@@ -18,42 +18,33 @@ const services = [
   },
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  show: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: i * 0.12 },
-  }),
-};
-
 export default function Services() {
+  const heading = useReveal<HTMLDivElement>();
+  const grid = useReveal<HTMLDivElement>({ threshold: 0.15 });
+
   return (
     <section id="services" className="relative px-6 py-32 md:py-40">
       <div className="mx-auto max-w-7xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 max-w-2xl"
+        <div
+          ref={heading.ref}
+          className={`mb-16 max-w-2xl transition-all duration-700 ease-out ${
+            heading.visible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-12"
+          }`}
         >
           <p className="mb-4 text-xs uppercase tracking-[0.3em] text-brand-lime">What we do</p>
           <h2 className="text-4xl font-semibold leading-tight md:text-6xl">
             Three things, done <span className="text-gradient">properly</span>.
           </h2>
-        </motion.div>
+        </div>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div ref={grid.ref} className="grid gap-6 md:grid-cols-3">
           {services.map((s, i) => (
-            <motion.div
+            <div
               key={s.n}
-              custom={i}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.3 }}
-              variants={fadeUp}
-              className="glass glass-hover group relative overflow-hidden rounded-2xl p-8 transition-all duration-500"
+              style={{ transitionDelay: grid.visible ? `${i * 100}ms` : "0ms" }}
+              className={`glass glass-hover group relative overflow-hidden rounded-2xl p-8 transition-all duration-700 ease-out ${
+                grid.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              }`}
             >
               <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-brand-teal/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               <div className="relative">
@@ -61,7 +52,7 @@ export default function Services() {
                 <h3 className="mt-4 text-2xl font-semibold">{s.title}</h3>
                 <p className="mt-4 text-sm leading-relaxed text-white/60">{s.body}</p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

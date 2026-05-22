@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import logo from "@/assets/logo.png";
 
 export default function Nav() {
   return (
@@ -9,9 +10,16 @@ export default function Nav() {
       className="fixed top-0 left-0 right-0 z-50"
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:py-6">
-        <a href="#top" className="flex items-center gap-2 group">
-          <span className="h-2.5 w-2.5 rounded-full bg-brand-teal shadow-[0_0_12px_var(--brand-teal)] group-hover:bg-brand-lime transition-colors" />
-          <span className="font-display text-lg font-semibold tracking-tight">
+        <a href="#top" className="flex items-center gap-3 group">
+          <img
+            src={logo}
+            alt="Virtual Upswing logo"
+            className="h-9 w-9 rounded-full"
+          />
+          <span
+            className="font-display text-lg text-white"
+            style={{ fontWeight: 300, letterSpacing: "0.05em" }}
+          >
             Virtual Upswing
           </span>
         </a>
