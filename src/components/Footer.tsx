@@ -1,11 +1,13 @@
 import logo from "@/assets/logo.png";
+
+export default function Footer() {
   return (
     <footer id="footer" className="relative bg-black px-6 pb-10 pt-12">
       <div className="mx-auto max-w-7xl">
         <div className="mb-10 h-px w-full bg-white/[0.06]" />
         <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-3">
           <div className="flex items-center gap-3">
-            <img src="/src/assets/logo.png" alt="" className="h-8 w-8 rounded-full" />
+            <img src={logo} alt="Virtual Upswing logo" className="h-8 w-8 rounded-full" />
             <div>
               <div className="font-display text-sm text-white" style={{ letterSpacing: "0.04em" }}>
                 Virtual Upswing
@@ -21,6 +23,7 @@ import logo from "@/assets/logo.png";
           <div />
         </div>
       </div>
+      <div id="contact" className="sr-only" aria-hidden="true" />
     </footer>
   );
 }
