@@ -23,7 +23,7 @@ export default function Footer() {
           <div />
         </div>
       </div>
-      <div id="contact" className="sr-only" aria-hidden="true" />
     </footer>
+
   );
 }
