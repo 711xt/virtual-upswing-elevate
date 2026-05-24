@@ -1,4 +1,4 @@
-export default function Footer() {
+import logo from "@/assets/logo.png";
   return (
     <footer id="footer" className="relative bg-black px-6 pb-10 pt-12">
       <div className="mx-auto max-w-7xl">
