@@ -3,18 +3,18 @@ import { useReveal } from "@/hooks/use-reveal";
 const services = [
   {
     n: "01",
-    title: "Workflow Automation",
-    body: "We map the operations choking your team and rebuild them as AI-driven pipelines. CRM, ops, finance — connected and quiet.",
+    title: "AI Lead Response System",
+    body: "Responds instantly, qualifies leads, and books appointments automatically.",
   },
   {
     n: "02",
-    title: "Custom AI Agents",
-    body: "Purpose-built agents that handle inbound, qualify leads, draft proposals, and route work. Trained on your data, not someone else's.",
+    title: "Workflow Automation",
+    body: "Eliminates repetitive operational work and manual handoffs.",
   },
   {
     n: "03",
     title: "Systems Integration",
-    body: "Your stack, finally talking to itself. We wire your tools into one source of truth and own it end-to-end.",
+    body: "Connects CRM, email, phone, calendar, and reporting into one system.",
   },
 ];
 
@@ -31,9 +31,9 @@ export default function Services() {
             heading.visible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-12"
           }`}
         >
-          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-brand-lime">What we do</p>
+          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-brand-lime">Systems we deploy</p>
           <h2 className="text-4xl font-semibold leading-tight md:text-6xl">
-            Three things, done <span className="text-gradient">properly</span>.
+            Systems we <span className="text-gradient">deploy</span>.
           </h2>
         </div>
 
