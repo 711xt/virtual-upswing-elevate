@@ -1,27 +1,25 @@
 export default function Footer() {
   return (
-    <footer
-      id="contact"
-      className="relative bg-black border-t border-white/10 px-6 py-12"
-    >
-      <div className="mx-auto flex max-w-7xl flex-col gap-8 md:flex-row md:items-center md:justify-between">
-        <div>
-          <div className="font-display text-lg font-bold text-white">
-            Virtual Upswing
+    <footer id="footer" className="relative bg-black px-6 pb-10 pt-12">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-10 h-px w-full bg-white/[0.06]" />
+        <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-3">
+          <div className="flex items-center gap-3">
+            <img src="/src/assets/logo.png" alt="" className="h-8 w-8 rounded-full" />
+            <div>
+              <div className="font-display text-sm text-white" style={{ letterSpacing: "0.04em" }}>
+                Virtual Upswing
+              </div>
+              <div className="text-[11px] uppercase tracking-[0.25em] text-white/40">
+                Engineering Autonomous Operations
+              </div>
+            </div>
           </div>
-          <p className="mt-1 text-xs text-white/40">
-            Engineering Autonomous Operations
-          </p>
+          <div className="text-center text-xs text-white/35">
+            © 2026 Virtual Upswing. All rights reserved.
+          </div>
+          <div />
         </div>
-        <a
-          href="mailto:hello@virtualupswing.com"
-          className="inline-flex w-fit items-center gap-2 rounded-full bg-brand-teal px-6 py-3 text-sm font-medium text-white transition-all hover:shadow-[var(--glow-teal)] hover:bg-brand-teal/90"
-        >
-          Book a Call <span>→</span>
-        </a>
-      </div>
-      <div className="mt-10 text-center text-xs text-white/30">
-        © 2025 Virtual Upswing. All rights reserved.
       </div>
     </footer>
   );
