@@ -21,7 +21,7 @@ export default function AutonomousOps() {
   }, [body.visible]);
 
   return (
-    <section className="relative px-6 py-32 md:py-40">
+    <section id="operations" className="relative px-6 py-32 md:py-40">
       <div className="mx-auto max-w-7xl">
         <div
           ref={heading.ref}
