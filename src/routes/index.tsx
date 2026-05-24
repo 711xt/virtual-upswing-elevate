@@ -32,8 +32,9 @@ function Index() {
       <Nav />
       <Hero />
       <Services />
-      <Industries />
+      <AutonomousOps />
       <HowItWorks />
+      <CtaSection />
       <Footer />
     </main>
   );
