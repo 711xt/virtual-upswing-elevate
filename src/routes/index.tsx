@@ -11,7 +11,7 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Virtual Upswing — AI Automations That Run Your Business" },
+      { title: "Virtual Upswing" },
       {
         name: "description",
         content:
