@@ -72,14 +72,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "virtual upswing" },
+      { name: "description", content: "We turn operational chaos into reliable systems through automation, integrations, and workflows that keep work moving." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "virtual upswing" },
+      { property: "og:description", content: "We turn operational chaos into reliable systems through automation, integrations, and workflows that keep work moving." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "virtual upswing" },
+      { name: "twitter:description", content: "We turn operational chaos into reliable systems through automation, integrations, and workflows that keep work moving." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/167M53bypifeXQeMVFMnflxoePM2/social-images/social-1779687673010-ChatGPT_Image_May_22,_2026,_11_52_40_AM.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/167M53bypifeXQeMVFMnflxoePM2/social-images/social-1779687673010-ChatGPT_Image_May_22,_2026,_11_52_40_AM.webp" },
     ],
     links: [
       {
