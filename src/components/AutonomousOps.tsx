@@ -75,7 +75,9 @@ export default function AutonomousOps() {
             ))}
             <div className="mt-8">
               <a
-                href="#contact"
+                href="https://calendly.com/noel-virtualupswing/30min"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-brand-teal px-7 py-3.5 text-sm font-medium text-white transition-all hover:bg-brand-teal/90 hover:shadow-[var(--glow-teal)]"
               >
                 Book A Call <span>→</span>

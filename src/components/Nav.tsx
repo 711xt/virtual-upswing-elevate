@@ -70,7 +70,9 @@ export default function Nav() {
         </nav>
 
         <a
-          href="#contact"
+          href="https://calendly.com/noel-virtualupswing/30min"
+          target="_blank"
+          rel="noopener noreferrer"
           className="rounded-full bg-brand-teal px-4 py-2 text-[13px] font-medium text-white transition-all hover:bg-brand-teal/90 hover:shadow-[var(--glow-teal)]"
         >
           Book A Call
