@@ -43,7 +43,9 @@ export default function Hero() {
           className="mt-10 flex items-center gap-6"
         >
           <a
-            href="#contact"
+            href="https://calendly.com/noel-virtualupswing/30min"
+            target="_blank"
+            rel="noopener noreferrer"
             className="group relative inline-flex items-center gap-2 rounded-full bg-brand-offwhite px-7 py-3.5 text-sm font-medium text-black transition-all hover:bg-brand-lime hover:shadow-[var(--glow-lime)]"
           >
             Book A Call

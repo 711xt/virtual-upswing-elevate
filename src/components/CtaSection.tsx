@@ -19,7 +19,9 @@ export default function CtaSection() {
           </h2>
           <div className="mt-10">
             <a
-              href="#contact"
+              href="https://calendly.com/noel-virtualupswing/30min"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-brand-offwhite px-7 py-3.5 text-sm font-medium text-black transition-all hover:bg-brand-lime hover:shadow-[var(--glow-lime)]"
             >
               Book A Call <span>→</span>
