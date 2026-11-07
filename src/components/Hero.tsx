@@ -14,8 +14,8 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="max-w-5xl text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl lg:text-8xl"
         >
-          We turn operational chaos <br className="hidden md:block" />
-          into <span className="text-gradient">reliable systems</span>.
+          Bridging Publishers <br className="hidden md:block" />
+          with <span className="text-gradient">Global Advertising Ecosystem</span>.
         </motion.h1>
 
         <motion.p
@@ -33,7 +33,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mt-6 max-w-2xl text-base text-white/85 md:text-lg"
         >
-          When every lead, task, and follow-up has a process, opportunities stop slipping through the cracks.
+          Virtual Upswing bridges digital inventory with global advertising demand, driving advertising revenue growth for publishers.
         </motion.p>
 
         <motion.div
@@ -48,11 +48,11 @@ export default function Hero() {
             rel="noopener noreferrer"
             className="group relative inline-flex items-center gap-2 rounded-full bg-brand-offwhite px-7 py-3.5 text-sm font-medium text-black transition-all hover:bg-brand-lime hover:shadow-[var(--glow-lime)]"
           >
-            Book A Call
+            Partner with Us
             <span className="transition-transform group-hover:translate-x-0.5">→</span>
           </a>
           <a href="#services" className="text-sm text-white/60 hover:text-white transition-colors">
-            See what we build
+            Explore Solutions
           </a>
         </motion.div>
       </div>

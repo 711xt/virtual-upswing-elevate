@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import logo from "@/assets/logo.png";
 
 const links = [
-  { id: "services", label: "Systems We Deploy" },
-  { id: "operations", label: "Autonomous Operations" },
-  { id: "process", label: "How We Work" },
+  { id: "services", label: "Built for Publishers" },
+  { id: "operations", label: "Connecting the Ecosystem" },
+  { id: "process", label: "Beyond Monetisation" },
 ];
 
 export default function Nav() {
@@ -75,7 +75,7 @@ export default function Nav() {
           rel="noopener noreferrer"
           className="rounded-full bg-brand-teal px-4 py-2 text-[13px] font-medium text-white transition-all hover:bg-brand-teal/90 hover:shadow-[var(--glow-teal)]"
         >
-          Book A Call
+          Connect
         </a>
       </div>
     </motion.header>
