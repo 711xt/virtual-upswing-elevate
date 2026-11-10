@@ -10,12 +10,12 @@ const services = [
     body: "Connecting app inventory with advertising demand through our monetisation partners.",
   },
   {
-    title: "Building Publisher Partnerships",
+    title: "Publisher Partnerships",
     body: "We partner with digital publishers across categories, markets and platforms.",
   },
   {
-    title: "Connecting the Advertising Ecosystem",
-    body: "We partner with established AdTech platforms to bring technology and advertising demand to our publisher network.",
+    title: "Advertising Ecosystem",
+    body: "Bringing technology and advertising demand to our publisher network.",
   },
 ];
 
