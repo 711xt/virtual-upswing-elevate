@@ -64,11 +64,11 @@ function Bubble({ node, size = 72, cls }: { node: Node; size?: number; cls: stri
   );
 }
 
-function Price({ v, i, drift }: { v: string; i: number; drift: number }) {
+function Price({ v, i, drift, dur }: { v: string; i: number; drift: number; dur?: number }) {
   return (
     <div
       className={`flex items-center rounded-full border border-brand-teal/25 bg-brand-charcoal/70 px-2.5 py-1 shadow-[0_0_10px_-4px_rgba(0,130,122,0.55)] ${drift ? "eco-float2" : "eco-float"}`}
-      style={{ animationDelay: `${-(i * 0.7)}s` }}
+      style={{ animationDelay: `${-(i * 0.7)}s`, ...(dur ? { animationDuration: `${dur}s` } : {}) }}
     >
       <span className="font-display text-[10px] text-brand-offwhite/90">{v}</span>
     </div>
@@ -189,9 +189,7 @@ export default function EcosystemDiagram() {
 
         {pricePos.map(([x, y, s, o, d, drift], i) => (
           <div key={prices[i]} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: pct(x, W), top: pct(y, H), scale: String(s), opacity: o }}>
-            <div style={{ animationDuration: `${d}s` }} className="contents">
-              <Price v={prices[i]} i={i} drift={drift} />
-            </div>
+            <Price v={prices[i]} i={i} drift={drift} dur={d} />
           </div>
         ))}
         {techPos.map(([x, y], i) => (
