@@ -2,19 +2,20 @@ import { useReveal } from "@/hooks/use-reveal";
 
 const services = [
   {
-    n: "01",
-    title: "AI Lead Response System",
-    body: "Responds instantly, qualifies leads, and books appointments automatically.",
+    title: "Unlock Web Revenue",
+    body: "We connect mobile and desktop web publishers with monetisation partners to unlock ad revenue.",
   },
   {
-    n: "02",
-    title: "Workflow Automation",
-    body: "Eliminates repetitive operational work and manual handoffs.",
+    title: "In-App Advertising",
+    body: "Connecting app inventory with advertising demand through our monetisation partners.",
   },
   {
-    n: "03",
-    title: "Systems Integration",
-    body: "Connects CRM, email, phone, calendar, and reporting into one system.",
+    title: "Building Publisher Partnerships",
+    body: "We partner with digital publishers across categories, markets and platforms.",
+  },
+  {
+    title: "Connecting the Advertising Ecosystem",
+    body: "We partner with established AdTech platforms to bring technology and advertising demand to our publisher network.",
   },
 ];
 
@@ -33,14 +34,14 @@ export default function Services() {
         >
           <p className="mb-4 text-xs uppercase tracking-[0.3em] text-brand-lime">Systems we deploy</p>
           <h2 className="text-4xl font-semibold leading-tight md:text-6xl">
-            Systems we <span className="text-gradient">deploy</span>.
+            Built for <span className="text-gradient">Publishers</span>.
           </h2>
         </div>
 
-        <div ref={grid.ref} className="grid gap-6 md:grid-cols-3">
+        <div ref={grid.ref} className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {services.map((s, i) => (
             <div
-              key={s.n}
+              key={s.title}
               style={{ transitionDelay: grid.visible ? `${i * 100}ms` : "0ms" }}
               className={`glass glass-hover group relative overflow-hidden rounded-2xl p-8 transition-all duration-700 ease-out ${
                 grid.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
@@ -48,8 +49,7 @@ export default function Services() {
             >
               <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-brand-teal/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               <div className="relative">
-                <span className="font-display text-xs text-brand-teal">{s.n}</span>
-                <h3 className="mt-4 text-2xl font-semibold">{s.title}</h3>
+                <h3 className="text-2xl font-semibold">{s.title}</h3>
                 <p className="mt-4 text-sm leading-relaxed text-white/60">{s.body}</p>
               </div>
             </div>
