@@ -26,17 +26,26 @@ const tech = ["GAM", "prebid.js", "VAST 4.0", "JS", "ads.txt", "OpenRTB"];
 
 // Desktop geometry (viewBox 1200 x 640)
 const W = 1200, H = 640, CX = 600, CY = 320;
-const ROWS = [88, 204, 320, 436, 552];
-const PUB_X = 200, PLAT_X = 1000;
-// floating price positions inside the left panel (x, y, scale)
-const pricePos: [number, number, number][] = [
-  [64, 40, 1], [338, 70, 0.85], [62, 150, 0.8], [342, 175, 1], [66, 262, 0.9],
-  [340, 290, 0.8], [62, 380, 1], [338, 400, 0.9], [66, 488, 0.85], [342, 515, 1], [64, 590, 0.8],
+// Organic bubble positions: [x, y, size]
+const pubPos: [number, number, number][] = [
+  [150, 118, 74], [278, 208, 60], [138, 332, 80], [284, 432, 58], [162, 542, 66],
+];
+const platPos: [number, number, number][] = [
+  [1052, 112, 72], [928, 202, 62], [1062, 330, 78], [922, 442, 60], [1042, 542, 64],
+];
+// Floating price positions: [x, y, scale, opacity, duration(s), drift variant]
+const pricePos: [number, number, number, number, number, number][] = [
+  [62, 56, 0.9, 0.7, 7.2, 0], [338, 88, 0.8, 0.55, 6.1, 1], [70, 208, 0.75, 0.5, 8.4, 1],
+  [332, 300, 0.85, 0.65, 6.8, 0], [58, 420, 0.8, 0.55, 7.6, 0], [342, 512, 0.9, 0.7, 6.4, 1],
+  [212, 158, 0.7, 0.45, 9.2, 1], [228, 268, 0.75, 0.5, 7.9, 0], [92, 474, 0.7, 0.45, 8.8, 1],
+  [300, 592, 0.85, 0.6, 6.9, 0], [222, 482, 0.7, 0.4, 9.6, 1],
 ];
 const techPos: [number, number][] = [[864, 146], [1140, 146], [864, 378], [1140, 262], [864, 494], [1140, 494]];
 
-const leftPath = (y: number) => `M${PUB_X + 36},${y} C${PUB_X + 200},${y} ${CX - 170},${CY} ${CX - 64},${CY}`;
-const rightPath = (y: number) => `M${CX + 64},${CY} C${CX + 170},${CY} ${PLAT_X - 200},${y} ${PLAT_X - 36},${y}`;
+const leftPath = (x: number, y: number, s: number) =>
+  `M${x + s / 2},${y} C${x + 190},${y} ${CX - 170},${CY} ${CX - 64},${CY}`;
+const rightPath = (x: number, y: number, s: number) =>
+  `M${CX + 64},${CY} C${CX + 170},${CY} ${x - 190},${y} ${x - s / 2},${y}`;
 
 const DUR = "8s";
 
@@ -55,12 +64,13 @@ function Bubble({ node, size = 72, cls }: { node: Node; size?: number; cls: stri
   );
 }
 
-function Price({ v, i }: { v: string; i: number }) {
+function Price({ v, i, drift, dur }: { v: string; i: number; drift: number; dur?: number }) {
   return (
-    <div className="eco-float flex flex-col items-center rounded-full border border-brand-teal/30 bg-brand-charcoal/80 px-3 py-1.5 shadow-[0_0_14px_-4px_rgba(0,130,122,0.6)]"
-      style={{ animationDelay: `${-(i * 0.7)}s` }}>
-      <span className="font-display text-xs text-brand-offwhite">{v}</span>
-      <span className="text-[8px] uppercase tracking-[0.15em] text-white/45">Floor Price</span>
+    <div
+      className={`flex items-center rounded-full border border-brand-teal/25 bg-brand-charcoal/70 px-2.5 py-1 shadow-[0_0_10px_-4px_rgba(0,130,122,0.55)] ${drift ? "eco-float2" : "eco-float"}`}
+      style={{ animationDelay: `${-(i * 0.7)}s`, ...(dur ? { animationDuration: `${dur}s` } : {}) }}
+    >
+      <span className="font-display text-[10px] text-brand-offwhite/90">{v}</span>
     </div>
   );
 }
@@ -87,6 +97,9 @@ function Core({ size }: { size: number }) {
 
 const pct = (v: number, t: number) => `${(v / t) * 100}%`;
 
+const sideLabel =
+  "text-center text-[10px] uppercase tracking-[0.3em] text-brand-offwhite/85 [text-shadow:0_0_14px_rgba(0,130,122,0.9),0_0_30px_rgba(0,130,122,0.45)]";
+
 export default function EcosystemDiagram() {
   const svgRef = useRef<SVGSVGElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -108,6 +121,7 @@ export default function EcosystemDiagram() {
     <div ref={wrapRef} className="eco-root relative w-full">
       <style>{`
         @keyframes eco-float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-6px) } }
+        @keyframes eco-float2 { 0%,100% { transform: translate(0,0) } 50% { transform: translate(5px,-9px) } }
         @keyframes eco-core { 0%,8% { box-shadow: 0 0 30px -10px rgba(0,130,122,.35) } 28%,70% { box-shadow: 0 0 70px -6px rgba(0,130,122,.75), inset 0 0 30px -10px rgba(94,173,110,.4) } 100% { box-shadow: 0 0 30px -10px rgba(0,130,122,.35) } }
         @keyframes eco-backlight { 0%,10% { opacity:.25; transform: scale(.85) } 32%,68% { opacity:.9; transform: scale(1) } 100% { opacity:.25; transform: scale(.85) } }
         @keyframes eco-logo { 0%,10% { filter: brightness(.75) } 30%,70% { filter: brightness(1.15) } 100% { filter: brightness(.75) } }
@@ -116,6 +130,7 @@ export default function EcosystemDiagram() {
         @keyframes eco-dash { to { stroke-dashoffset: -40 } }
         @keyframes eco-vpulse { 0% { top: 0; opacity: 0 } 15% { opacity: 1 } 85% { opacity: 1 } 100% { top: 100%; opacity: 0 } }
         .eco-float { animation: eco-float 6s ease-in-out infinite }
+        .eco-float2 { animation: eco-float2 7s ease-in-out infinite }
         .eco-core { animation: eco-core ${DUR} ease-in-out infinite }
         .eco-backlight { background: radial-gradient(circle, rgba(94,173,110,.28) 0%, rgba(0,130,122,.22) 40%, transparent 70%); animation: eco-backlight ${DUR} ease-in-out infinite }
         .eco-logo { animation: eco-logo ${DUR} ease-in-out infinite }
@@ -136,18 +151,14 @@ export default function EcosystemDiagram() {
 
       {/* Desktop */}
       <div className="relative mx-auto hidden w-full max-w-6xl lg:block" style={{ aspectRatio: `${W} / ${H}` }}>
-        {/* panels */}
-        <div className="glass absolute rounded-2xl" style={{ left: 0, top: pct(10, H), width: pct(400, W), height: pct(620, H) }} />
-        <div className="glass absolute rounded-2xl" style={{ right: 0, top: pct(10, H), width: pct(400, W), height: pct(620, H) }} />
-
         <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="absolute inset-0 h-full w-full" aria-hidden="true">
           <defs>
             <radialGradient id="eco-dot"><stop offset="0%" stopColor="#F0F0F0" /><stop offset="40%" stopColor="#5EAD6E" /><stop offset="100%" stopColor="#00827A" stopOpacity="0" /></radialGradient>
           </defs>
-          {ROWS.map((y, i) => (
+          {pubPos.map(([x, y, s], i) => (
             <g key={`l${i}`}>
-              <path id={`eco-l${i}`} d={leftPath(y)} fill="none" stroke="#00827A" strokeOpacity="0.35" strokeWidth="1" />
-              <path d={leftPath(y)} fill="none" stroke="#00827A" strokeOpacity="0.7" strokeWidth="1.2" className="eco-dash" />
+              <path id={`eco-l${i}`} d={leftPath(x, y, s)} fill="none" stroke="#00827A" strokeOpacity="0.35" strokeWidth="1" />
+              <path d={leftPath(x, y, s)} fill="none" stroke="#00827A" strokeOpacity="0.7" strokeWidth="1.2" className="eco-dash" />
               {/* inbound pub -> centre (0–25%) and return centre -> pub (75–100%) */}
               {[0, 0.12].map((off) => (
                 <circle key={off} r={off ? 2 : 4} fill="url(#eco-dot)" className="eco-pulse">
@@ -157,10 +168,10 @@ export default function EcosystemDiagram() {
               ))}
             </g>
           ))}
-          {ROWS.map((y, i) => (
+          {platPos.map(([x, y, s], i) => (
             <g key={`r${i}`}>
-              <path id={`eco-r${i}`} d={rightPath(y)} fill="none" stroke="#5EAD6E" strokeOpacity="0.3" strokeWidth="1" />
-              <path d={rightPath(y)} fill="none" stroke="#5EAD6E" strokeOpacity="0.6" strokeWidth="1.2" className="eco-dash" />
+              <path id={`eco-r${i}`} d={rightPath(x, y, s)} fill="none" stroke="#5EAD6E" strokeOpacity="0.3" strokeWidth="1" />
+              <path d={rightPath(x, y, s)} fill="none" stroke="#5EAD6E" strokeOpacity="0.6" strokeWidth="1.2" className="eco-dash" />
               {/* outbound centre -> plat (30–52%) and return plat -> centre (55–75%) */}
               {[0, 0.12].map((off) => (
                 <circle key={off} r={off ? 2 : 4} fill="url(#eco-dot)" className="eco-pulse">
@@ -172,13 +183,13 @@ export default function EcosystemDiagram() {
           ))}
         </svg>
 
-        {/* panel titles */}
-        <div className="absolute text-center text-[10px] uppercase tracking-[0.3em] text-white/45" style={{ left: 0, width: pct(400, W), top: `calc(${pct(10, H)} - 1.75rem)` }}>Publishers</div>
-        <div className="absolute text-center text-[10px] uppercase tracking-[0.3em] text-white/45" style={{ right: 0, width: pct(400, W), top: `calc(${pct(10, H)} - 1.75rem)` }}>Monetising Platforms</div>
+        {/* side labels */}
+        <div className={`absolute ${sideLabel}`} style={{ left: 0, width: pct(400, W), top: pct(6, H) }}>Publishers</div>
+        <div className={`absolute ${sideLabel}`} style={{ right: 0, width: pct(400, W), top: pct(6, H) }}>Monetising Platforms</div>
 
-        {pricePos.map(([x, y, s], i) => (
-          <div key={prices[i]} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: pct(x, W), top: pct(y, H), scale: String(s), opacity: 0.55 + s * 0.4 }}>
-            <Price v={prices[i]} i={i} />
+        {pricePos.map(([x, y, s, o, d, drift], i) => (
+          <div key={prices[i]} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: pct(x, W), top: pct(y, H), scale: String(s), opacity: o }}>
+            <Price v={prices[i]} i={i} drift={drift} dur={d} />
           </div>
         ))}
         {techPos.map(([x, y], i) => (
@@ -187,36 +198,38 @@ export default function EcosystemDiagram() {
           </div>
         ))}
 
-        {publishers.map((n, i) => (
-          <div key={n.label} className="absolute -translate-x-1/2" style={{ left: pct(PUB_X, W), top: `calc(${pct(ROWS[i], H)} - 32px)` }}>
-            <Bubble node={n} size={64} cls="eco-pub" />
-          </div>
-        ))}
-        {platforms.map((n, i) => (
-          <div key={n.label} className="absolute -translate-x-1/2" style={{ left: pct(PLAT_X, W), top: `calc(${pct(ROWS[i], H)} - 32px)` }}>
-            <Bubble node={n} size={64} cls="eco-plat" />
-          </div>
-        ))}
+        {publishers.map((n, i) => {
+          const [x, y, s] = pubPos[i];
+          return (
+            <div key={n.label} className="absolute -translate-x-1/2" style={{ left: pct(x, W), top: `calc(${pct(y, H)} - ${s / 2}px)` }}>
+              <Bubble node={n} size={s} cls="eco-pub" />
+            </div>
+          );
+        })}
+        {platforms.map((n, i) => {
+          const [x, y, s] = platPos[i];
+          return (
+            <div key={n.label} className="absolute -translate-x-1/2" style={{ left: pct(x, W), top: `calc(${pct(y, H)} - ${s / 2}px)` }}>
+              <Bubble node={n} size={s} cls="eco-plat" />
+            </div>
+          );
+        })}
 
         <div className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: "50%", top: pct(CY, H) }}>
           <Core size={128} />
-        </div>
-        <div className="absolute -translate-x-1/2 text-[9px] uppercase tracking-[0.25em] text-white/30" style={{ left: pct(200, W), bottom: `calc(${pct(10, H)} - 1.5rem)` }}>
-          Illustrative values
         </div>
       </div>
 
       {/* Tablet / mobile */}
       <div className="flex flex-col items-center lg:hidden">
-        <div className="glass w-full max-w-xl rounded-2xl p-6">
-          <p className="mb-5 text-center text-[10px] uppercase tracking-[0.3em] text-white/45">Publishers</p>
+        <div className="w-full max-w-xl p-6">
+          <p className={`mb-5 ${sideLabel}`}>Publishers</p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-5">
             {publishers.map((n) => <Bubble key={n.label} node={n} size={58} cls="eco-pub" />)}
           </div>
           <div className="mt-6 flex flex-wrap justify-center gap-2">
-            {prices.slice(0, 6).map((p, i) => <Price key={p} v={p} i={i} />)}
+            {prices.slice(0, 6).map((p, i) => <Price key={p} v={p} i={i} drift={i % 2} />)}
           </div>
-          <p className="mt-3 text-center text-[9px] uppercase tracking-[0.25em] text-white/30">Illustrative values</p>
         </div>
         <div className="flex gap-6">
           <div className="eco-vline relative h-14 w-px bg-brand-teal/50" />
@@ -227,8 +240,8 @@ export default function EcosystemDiagram() {
           <div className="eco-vline relative h-14 w-px bg-brand-lime/50" />
           <div className="eco-vline rev relative h-14 w-px bg-brand-lime/50" />
         </div>
-        <div className="glass w-full max-w-xl rounded-2xl p-6">
-          <p className="mb-5 text-center text-[10px] uppercase tracking-[0.3em] text-white/45">Monetising Platforms</p>
+        <div className="w-full max-w-xl p-6">
+          <p className={`mb-5 ${sideLabel}`}>Monetising Platforms</p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-5">
             {platforms.map((n) => <Bubble key={n.label} node={n} size={58} cls="eco-plat" />)}
           </div>
