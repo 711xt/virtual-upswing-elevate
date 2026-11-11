@@ -19,6 +19,8 @@ export const Route = createFileRoute("/")({
           "Virtual Upswing builds custom AI workflows and agents that replace the busywork eating your team's day. Outcomes only.",
       },
       { property: "og:title", content: "Virtual Upswing" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       {
         property: "og:description",
         content: "Custom AI workflows and agents, built and operated end-to-end.",

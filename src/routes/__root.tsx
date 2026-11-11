@@ -83,8 +83,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:site", content: "@Lovable" },
       { name: "twitter:title", content: "Virtual Upswing" },
       { name: "twitter:description", content: "We turn operational chaos into reliable systems through automation, integrations, and workflows that keep work moving." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/167M53bypifeXQeMVFMnflxoePM2/social-images/social-1779687673010-ChatGPT_Image_May_22,_2026,_11_52_40_AM.webp" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/167M53bypifeXQeMVFMnflxoePM2/social-images/social-1779687673010-ChatGPT_Image_May_22,_2026,_11_52_40_AM.webp" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },

@@ -13,9 +13,10 @@ export default function CtaSection() {
         <div className="pointer-events-none absolute -left-20 -top-20 h-64 w-64 rounded-full bg-brand-teal/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-brand-lime/15 blur-3xl" />
         <div className="relative">
-          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-brand-lime">Ready when you are</p>
+          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-muted-foreground">ENGINEERING AUTONOMOUS OPERATIONS</p>
           <h2 className="mx-auto max-w-3xl text-4xl font-semibold leading-tight md:text-6xl">
-            Let's build the system that <span className="text-gradient">runs your business</span>.
+            Your Inventory. More Opportunities.<br />
+            <span className="text-gradient">Stronger Returns.</span>
           </h2>
           <div className="mt-10">
             <a
@@ -24,7 +25,7 @@ export default function CtaSection() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-brand-offwhite px-7 py-3.5 text-sm font-medium text-black transition-all hover:bg-brand-lime hover:shadow-[var(--glow-lime)]"
             >
-              Book A Call <span>→</span>
+              Connect <span>→</span>
             </a>
           </div>
         </div>
