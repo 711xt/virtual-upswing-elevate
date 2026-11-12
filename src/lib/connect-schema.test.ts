@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { connectSchema } from "./connect-schema";
+import { connectSchema, nextCapabilities } from "./connect-schema";
 
 const base = {
   firstName: "A", lastName: "B", email: "a@b.com", phone: "+44 7700 900000",
@@ -16,5 +16,8 @@ describe("connect form rules", () => {
   });
   it("consent is required", () => {
     expect(connectSchema.safeParse({ ...base, role: "Other", capabilities: ["Other"], consent: false }).success).toBe(false);
+  });
+  it("changing organisation type clears capabilities", () => {
+    expect(nextCapabilities()).toEqual([]);
   });
 });

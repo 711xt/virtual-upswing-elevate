@@ -27,6 +27,9 @@ export const ROLES_WITH_CAPABILITIES: readonly string[] = [
 
 export const needsCapabilities = (role?: string) => !!role && ROLES_WITH_CAPABILITIES.includes(role);
 
+/** Any change of organisation type clears all selected capabilities. */
+export const nextCapabilities = (): string[] => [];
+
 const req = (label: string, max = 100) =>
   z.string().trim().min(1, { message: `${label} is required` }).max(max, { message: `${label} is too long` });
 

@@ -1,13 +1,15 @@
 import { useState, type FormEvent } from "react";
-import { Loader2, CheckCircle2 } from "lucide-react";
+import { Loader2, CheckCircle2, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { CAPABILITIES, ROLES, connectSchema, needsCapabilities } from "@/lib/connect-schema";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Checkbox } from "@/components/ui/checkbox";
+import { CAPABILITIES, ROLES, connectSchema, needsCapabilities, nextCapabilities } from "@/lib/connect-schema";
 
 const COUNTRIES = ["Argentina","Australia","Austria","Bangladesh","Belgium","Brazil","Canada","Chile","China","Colombia","Czech Republic","Denmark","Egypt","Finland","France","Germany","Greece","Hong Kong","Hungary","India","Indonesia","Ireland","Israel","Italy","Japan","Kenya","Malaysia","Mexico","Netherlands","New Zealand","Nigeria","Norway","Pakistan","Philippines","Poland","Portugal","Qatar","Romania","Saudi Arabia","Singapore","South Africa","South Korea","Spain","Sri Lanka","Sweden","Switzerland","Taiwan","Thailand","Turkey","Ukraine","United Arab Emirates","United Kingdom","United States","Vietnam","Other"];
 
 const inputCls = "w-full rounded-xl border border-border bg-secondary/40 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 outline-none transition focus:border-brand-teal focus:ring-1 focus:ring-brand-teal";
-const chipCls = (on: boolean) =>
-  `rounded-full border px-4 py-2 text-xs transition ${on ? "border-brand-teal bg-brand-teal/20 text-foreground" : "border-border text-muted-foreground hover:text-foreground hover:border-brand-teal/50"}`;
+const menuCls = "z-[60] border-border bg-[#080808] text-foreground";
 
 type Errors = Record<string, string>;
 const ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined;
@@ -93,24 +95,43 @@ export default function ConnectForm({ onClose }: { onClose: () => void }) {
       </fieldset>
 
       <fieldset>
-        <legend className="mb-4 text-xs uppercase tracking-[0.25em] text-brand-teal">I represent *</legend>
-        <div className="flex flex-wrap gap-2" role="radiogroup">
-          {ROLES.map((r) => (
-            <button key={r} type="button" role="radio" aria-checked={role === r} className={chipCls(role === r)}
-              onClick={() => { setRole(r); if (!needsCapabilities(r)) setCaps([]); }}>{r}</button>
-          ))}
-        </div>
+        <legend className="mb-4 text-xs uppercase tracking-[0.25em] text-brand-teal">Organisation</legend>
+        <label htmlFor="c-role" className="mb-1.5 block text-xs text-muted-foreground">I represent *</label>
+        <Select value={role} onValueChange={(r) => { setRole(r); setCaps(nextCapabilities()); }}>
+          <SelectTrigger id="c-role" aria-invalid={!!errors.role} className={`${inputCls} h-auto`}>
+            <SelectValue placeholder="Select your organisation type" />
+          </SelectTrigger>
+          <SelectContent className={menuCls}>
+            {ROLES.map((r) => <SelectItem key={r} value={r}>{r}</SelectItem>)}
+          </SelectContent>
+        </Select>
         <Err k="role" />
         {needsCapabilities(role) && (
           <div className="mt-6 animate-in fade-in slide-in-from-top-2 duration-300">
-            <p className="mb-3 text-sm text-foreground">Which solutions or capabilities do you support? *</p>
-            <div className="flex flex-wrap gap-2">
-              {CAPABILITIES.map((c) => {
-                const on = caps.includes(c);
-                return <button key={c} type="button" aria-pressed={on} className={chipCls(on)}
-                  onClick={() => setCaps(on ? caps.filter((x) => x !== c) : [...caps, c])}>{c}</button>;
-              })}
-            </div>
+            <label htmlFor="c-caps" className="mb-1.5 block text-xs text-muted-foreground">Which solutions or capabilities do you support? *</label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <button id="c-caps" type="button" aria-invalid={!!errors.capabilities} className={`${inputCls} flex items-center justify-between gap-3 text-left`}>
+                  {caps.length === 0 ? <span className="text-muted-foreground/70">Select your capabilities</span> : (
+                    <span className="flex flex-wrap gap-1.5">
+                      {caps.map((c) => <span key={c} className="rounded-full border border-brand-teal/50 bg-brand-teal/15 px-2.5 py-0.5 text-xs">{c}</span>)}
+                    </span>
+                  )}
+                  <ChevronDown className="h-4 w-4 shrink-0 opacity-60" />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent align="start" className={`${menuCls} w-[var(--radix-popover-trigger-width)] p-1`}>
+                {CAPABILITIES.map((c) => {
+                  const on = caps.includes(c);
+                  return (
+                    <label key={c} className="flex cursor-pointer items-center gap-3 rounded-md px-3 py-2 text-sm hover:bg-secondary/60">
+                      <Checkbox checked={on} onCheckedChange={() => setCaps(on ? caps.filter((x) => x !== c) : [...caps, c])} />
+                      {c}
+                    </label>
+                  );
+                })}
+              </PopoverContent>
+            </Popover>
             <Err k="capabilities" />
           </div>
         )}
