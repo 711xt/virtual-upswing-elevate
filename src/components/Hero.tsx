@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { useConnect } from "@/components/ConnectDialog";
 import ParticlesBackground from "./ParticlesBackground";
 
 export default function Hero() {
+  const connect = useConnect();
   return (
     <section id="top" className="relative h-screen w-full overflow-hidden bg-black">
       <ParticlesBackground />
@@ -45,6 +47,7 @@ export default function Hero() {
         >
           <Button
             type="button"
+            onClick={connect.open}
             variant="ghost"
             className="group relative inline-flex h-auto items-center gap-2 rounded-full bg-brand-offwhite px-7 py-3.5 text-sm font-medium text-black transition-all hover:bg-brand-lime hover:text-black hover:shadow-[var(--glow-lime)]"
           >

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
+import { useConnect } from "@/components/ConnectDialog";
 
 const links = [
   { id: "services", label: "Built for Publishers" },
@@ -10,6 +11,7 @@ const links = [
 ];
 
 export default function Nav() {
+  const connect = useConnect();
   const [active, setActive] = useState<string>("");
 
   useEffect(() => {
@@ -72,6 +74,7 @@ export default function Nav() {
 
         <Button
           type="button"
+            onClick={connect.open}
           variant="ghost"
           className="h-auto rounded-full bg-brand-teal px-4 py-2 text-[13px] font-medium text-foreground transition-all hover:bg-brand-teal/90 hover:text-foreground hover:shadow-[var(--glow-teal)]"
         >

@@ -1,7 +1,9 @@
 import { useReveal } from "@/hooks/use-reveal";
 import { Button } from "@/components/ui/button";
+import { useConnect } from "@/components/ConnectDialog";
 
 export default function CtaSection() {
+  const connect = useConnect();
   const r = useReveal<HTMLDivElement>({ threshold: 0.2 });
   return (
     <section id="contact" className="relative px-6 md:px-10 xl:px-16 py-32 md:py-40">
@@ -22,6 +24,7 @@ export default function CtaSection() {
           <div className="mt-10">
             <Button
               type="button"
+            onClick={connect.open}
               variant="ghost"
               className="h-auto rounded-full bg-brand-offwhite px-7 py-3.5 text-sm font-medium text-background transition-all hover:bg-brand-lime hover:text-background hover:shadow-[var(--glow-lime)]"
             >
