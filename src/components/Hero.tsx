@@ -1,10 +1,9 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { useConnect } from "@/components/ConnectDialog";
+import { Link } from "@tanstack/react-router";
 import ParticlesBackground from "./ParticlesBackground";
 
 export default function Hero() {
-  const connect = useConnect();
   return (
     <section id="top" className="relative h-screen w-full overflow-hidden bg-black">
       <ParticlesBackground />
@@ -46,14 +45,13 @@ export default function Hero() {
           className="mt-10 flex items-center gap-6"
         >
           <Button
-            type="button"
-            onClick={connect.open}
+            asChild
             variant="ghost"
             className="group relative inline-flex h-auto items-center gap-2 rounded-full bg-brand-offwhite px-7 py-3.5 text-sm font-medium text-black transition-all hover:bg-brand-lime hover:text-black hover:shadow-[var(--glow-lime)]"
-          >
+          ><Link to="/connect">
             Partner with Us
             <span className="transition-transform group-hover:translate-x-0.5">→</span>
-          </Button>
+          </Link></Button>
           <a href="#services" className="text-sm text-white/60 hover:text-white transition-colors">
             Explore Solutions
           </a>

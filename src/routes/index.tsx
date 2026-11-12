@@ -7,7 +7,6 @@ import UnlockRevenue from "@/components/UnlockRevenue";
 import HowItWorks from "@/components/HowItWorks";
 import CtaSection from "@/components/CtaSection";
 import Footer from "@/components/Footer";
-import { ConnectProvider } from "@/components/ConnectDialog";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -32,7 +31,6 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <ConnectProvider>
     <main className="relative min-h-screen bg-black text-foreground">
       <Nav />
       <Hero />
@@ -43,6 +41,5 @@ function Index() {
       <CtaSection />
       <Footer />
     </main>
-    </ConnectProvider>
   );
 }
