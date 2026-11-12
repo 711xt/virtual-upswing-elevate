@@ -26,13 +26,15 @@ Every section after the Hero sits inside a box capped at **1280px wide** (`max-w
 - The diagram scales evenly, keeping its width-to-height ratio.
 - If cards look too wide on very large screens, that section's card grid gets its own smaller width limit, so they stop growing.
 
-## Effect by screen
-- **1920px:** content can spread up to 1600px wide instead of 1280px.
-- **1440px MacBook:** the gap at each side shrinks to the 64px padding.
+## Effect by screen (normal 100% zoom)
+The screenshots were taken at 50% zoom, so the page there measured about 2880px wide. These figures come from the site code at 100% zoom, not from the screenshots:
+- **MacBook Air 13" (1440px wide):** today about 80px of empty space on each side. After the change, 64px of padding, so the content becomes about 30px wider.
+- **MacBook Pro 14" / Air 15" (1512px wide):** today about 116px on each side. After the change, 64px.
+- **MacBook Pro 16" (1728px wide) and external monitors (1920px and wider):** today 224px to 320px or more on each side. The content widens to as much as 1600px, which is where most of the gain is.
 - **Tablet and mobile:** the same as today.
 
 ## Verification
-Take screenshots at 1920, 1440, 1280, 820 and 390px wide. Confirm the Hero and menu are identical, nothing overflows or stretches, and the mobile layout is unchanged.
+Measure the section widths at 100% zoom with screenshots at 1920, 1728, 1512, 1440, 1280, 820 and 390px wide. Confirm the Hero and menu are identical, nothing overflows or stretches, and the mobile layout is unchanged.
 
 ## Technical details
 - Services, AutonomousOps, UnlockRevenue, HowItWorks, Footer: `max-w-7xl` becomes `max-w-[1600px]`, and section `px-6` becomes `px-6 md:px-10 xl:px-16`.
