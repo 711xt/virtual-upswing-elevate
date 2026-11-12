@@ -1,3 +1,3 @@
 - [x] Set the desktop hero title to the three requested lines without changing its styling.
 - [x] Keep Connecting the Ecosystem on one desktop line, allowing mobile wrapping.
-- [x] Disconnect Partner with Us without changing its appearance; verify all three corrections.
+- [x] Disconnect Partner with Us without changing its appearance; verify all three corrections.- [x] Layout refinement: widen sections from Section 02 onwards (max 1600px)

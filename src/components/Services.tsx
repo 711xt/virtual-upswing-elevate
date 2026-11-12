@@ -24,8 +24,8 @@ export default function Services() {
   const grid = useReveal<HTMLDivElement>({ threshold: 0.15 });
 
   return (
-    <section id="services" className="relative px-6 py-32 md:py-40">
-      <div className="mx-auto max-w-7xl">
+    <section id="services" className="relative px-6 md:px-10 xl:px-16 py-32 md:py-40">
+      <div className="mx-auto max-w-[1600px]">
         <div
           ref={heading.ref}
           className={`mb-16 max-w-2xl transition-all duration-700 ease-out ${

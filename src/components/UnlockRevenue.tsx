@@ -36,8 +36,8 @@ export default function UnlockRevenue() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="revenue" className="relative px-6 py-32 md:py-40">
-      <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+    <section ref={sectionRef} id="revenue" className="relative px-6 md:px-10 xl:px-16 py-32 md:py-40">
+      <div className="mx-auto grid max-w-[1600px] gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
         <div
           ref={heading.ref}
           className={`transition-all duration-700 ease-out lg:border-r lg:border-white/10 lg:pr-12 lg:self-center ${

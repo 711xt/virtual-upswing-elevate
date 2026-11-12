@@ -150,7 +150,7 @@ export default function EcosystemDiagram() {
       `}</style>
 
       {/* Desktop */}
-      <div className="relative mx-auto hidden w-full max-w-6xl lg:block" style={{ aspectRatio: `${W} / ${H}` }}>
+      <div className="relative mx-auto hidden w-full max-w-[1440px] lg:block" style={{ aspectRatio: `${W} / ${H}` }}>
         <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} className="absolute inset-0 h-full w-full" aria-hidden="true">
           <defs>
             <radialGradient id="eco-dot"><stop offset="0%" stopColor="#F0F0F0" /><stop offset="40%" stopColor="#5EAD6E" /><stop offset="100%" stopColor="#00827A" stopOpacity="0" /></radialGradient>

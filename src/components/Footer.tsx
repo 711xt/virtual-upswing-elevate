@@ -2,8 +2,8 @@ import logo from "@/assets/logo.png";
 
 export default function Footer() {
   return (
-    <footer id="footer" className="relative bg-black px-6 pb-10 pt-12">
-      <div className="mx-auto max-w-7xl">
+    <footer id="footer" className="relative bg-black px-6 md:px-10 xl:px-16 pb-10 pt-12">
+      <div className="mx-auto max-w-[1600px]">
         <div className="mb-10 h-px w-full bg-white/[0.06]" />
         <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-3">
           <div className="flex items-center gap-3">

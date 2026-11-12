@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 export default function CtaSection() {
   const r = useReveal<HTMLDivElement>({ threshold: 0.2 });
   return (
-    <section id="contact" className="relative px-6 py-32 md:py-40">
+    <section id="contact" className="relative px-6 md:px-10 xl:px-16 py-32 md:py-40">
       <div
         ref={r.ref}
-        className={`glass relative mx-auto max-w-5xl overflow-hidden rounded-3xl px-8 py-20 text-center transition-all duration-700 ease-out md:px-16 ${
+        className={`glass relative mx-auto max-w-7xl overflow-hidden rounded-3xl px-8 py-20 text-center transition-all duration-700 ease-out md:px-16 ${
           r.visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
