@@ -45,7 +45,7 @@ export default function UnlockRevenue() {
           }`}
         >
           <p className="mb-4 text-xs uppercase tracking-[0.3em] text-brand-lime">How we work</p>
-          <h2 className="text-4xl font-semibold leading-tight md:text-6xl">
+          <h2 className="font-body text-4xl font-bold leading-tight tracking-normal md:text-6xl">
             Unlock More <span className="text-gradient">Revenue</span>
           </h2>
           <p className="mt-6 max-w-md text-base leading-relaxed text-white/70">

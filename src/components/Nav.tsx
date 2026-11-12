@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import logo from "@/assets/logo.png";
+import { Button } from "@/components/ui/button";
 
 const links = [
   { id: "services", label: "Built for Publishers" },
@@ -69,14 +70,13 @@ export default function Nav() {
           ))}
         </nav>
 
-        <a
-          href="https://calendly.com/noel-virtualupswing/30min"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="rounded-full bg-brand-teal px-4 py-2 text-[13px] font-medium text-white transition-all hover:bg-brand-teal/90 hover:shadow-[var(--glow-teal)]"
+        <Button
+          type="button"
+          variant="ghost"
+          className="h-auto rounded-full bg-brand-teal px-4 py-2 text-[13px] font-medium text-foreground transition-all hover:bg-brand-teal/90 hover:text-foreground hover:shadow-[var(--glow-teal)]"
         >
           Connect
-        </a>
+        </Button>
       </div>
     </motion.header>
   );

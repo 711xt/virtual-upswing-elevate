@@ -1,4 +1,5 @@
 import { useReveal } from "@/hooks/use-reveal";
+import { Button } from "@/components/ui/button";
 
 export default function CtaSection() {
   const r = useReveal<HTMLDivElement>({ threshold: 0.2 });
@@ -19,14 +20,13 @@ export default function CtaSection() {
             <span className="text-gradient">Stronger Returns.</span>
           </h2>
           <div className="mt-10">
-            <a
-              href="https://calendly.com/noel-virtualupswing/30min"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-brand-offwhite px-7 py-3.5 text-sm font-medium text-black transition-all hover:bg-brand-lime hover:shadow-[var(--glow-lime)]"
+            <Button
+              type="button"
+              variant="ghost"
+              className="h-auto rounded-full bg-brand-offwhite px-7 py-3.5 text-sm font-medium text-background transition-all hover:bg-brand-lime hover:text-background hover:shadow-[var(--glow-lime)]"
             >
               Connect <span>→</span>
-            </a>
+            </Button>
           </div>
         </div>
       </div>

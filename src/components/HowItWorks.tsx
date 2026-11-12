@@ -22,7 +22,7 @@ export default function HowItWorks() {
           }`}
         >
           <p className="mb-4 text-xs uppercase tracking-[0.3em] text-brand-lime">Revenue Growth</p>
-          <h2 className="text-4xl font-semibold leading-tight md:text-6xl">
+          <h2 className="font-body text-4xl font-bold leading-tight tracking-normal md:text-6xl">
             Beyond <span className="text-gradient">Monetisation</span>
           </h2>
           <p className="mt-8 font-display text-2xl font-semibold leading-snug md:text-3xl">

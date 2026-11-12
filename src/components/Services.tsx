@@ -33,8 +33,8 @@ export default function Services() {
           }`}
         >
           <p className="mb-4 text-xs uppercase tracking-[0.3em] text-brand-lime">Systems we deploy</p>
-          <h2 className="text-4xl font-semibold leading-tight md:text-6xl">
-            Built for <span className="text-gradient">Publishers</span>.
+          <h2 className="font-body text-4xl font-bold leading-tight tracking-normal md:text-6xl">
+            Built for <span className="text-gradient">Publishers</span>
           </h2>
         </div>
 

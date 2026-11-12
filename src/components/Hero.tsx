@@ -12,10 +12,10 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="max-w-5xl text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl lg:text-8xl"
+          className="max-w-5xl font-body text-5xl font-bold leading-[1.05] tracking-normal md:text-7xl lg:text-8xl"
         >
           Bridging Publishers <br className="hidden md:block" />
-          with <span className="text-gradient">Global Advertising Ecosystem</span>.
+          with <span className="text-gradient">Global Advertising Ecosystem</span>
         </motion.h1>
 
         <motion.p
