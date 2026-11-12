@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import ParticlesBackground from "./ParticlesBackground";
 
 export default function Hero() {
@@ -12,10 +13,10 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="max-w-5xl font-body text-5xl font-bold leading-[1.05] tracking-normal md:text-7xl lg:text-8xl"
+          className="max-w-5xl font-body text-5xl font-bold leading-[1.05] tracking-normal md:text-7xl lg:text-8xl lg:whitespace-nowrap"
         >
           Bridging Publishers <br className="hidden md:block" />
-          with <span className="text-gradient">Global Advertising Ecosystem</span>
+          with <span className="text-gradient">Global Advertising <br className="hidden lg:block" />Ecosystem</span>
         </motion.h1>
 
         <motion.p
@@ -42,15 +43,14 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.65 }}
           className="mt-10 flex items-center gap-6"
         >
-          <a
-            href="https://calendly.com/noel-virtualupswing/30min"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative inline-flex items-center gap-2 rounded-full bg-brand-offwhite px-7 py-3.5 text-sm font-medium text-black transition-all hover:bg-brand-lime hover:shadow-[var(--glow-lime)]"
+          <Button
+            type="button"
+            variant="ghost"
+            className="group relative inline-flex h-auto items-center gap-2 rounded-full bg-brand-offwhite px-7 py-3.5 text-sm font-medium text-black transition-all hover:bg-brand-lime hover:text-black hover:shadow-[var(--glow-lime)]"
           >
             Partner with Us
             <span className="transition-transform group-hover:translate-x-0.5">→</span>
-          </a>
+          </Button>
           <a href="#services" className="text-sm text-white/60 hover:text-white transition-colors">
             Explore Solutions
           </a>

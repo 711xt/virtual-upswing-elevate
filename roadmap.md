@@ -1,3 +1,3 @@
-- [x] Match the five requested titles to the reference typography and remove the two specified full stops.
-- [x] Remove Calendly destinations from Connect buttons only; preserve the Partner with Us link.
-- [x] Verify desktop/mobile titles and confirm Connect opens nothing.
+- [x] Set the desktop hero title to the three requested lines without changing its styling.
+- [x] Keep Connecting the Ecosystem on one desktop line, allowing mobile wrapping.
+- [x] Disconnect Partner with Us without changing its appearance; verify all three corrections.

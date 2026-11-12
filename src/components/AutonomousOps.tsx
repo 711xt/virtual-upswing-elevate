@@ -17,7 +17,7 @@ export default function AutonomousOps() {
           <p className="mb-4 text-xs uppercase tracking-[0.3em] text-brand-lime">
             Autonomous Operations
           </p>
-          <h2 className="font-body text-4xl font-bold leading-tight tracking-normal md:text-6xl">
+          <h2 className="font-body text-4xl font-bold leading-tight tracking-normal md:text-6xl lg:whitespace-nowrap">
             Connecting the <span className="text-gradient">Ecosystem</span>
           </h2>
         </div>
