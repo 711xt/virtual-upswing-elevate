@@ -1,5 +1,8 @@
-import { useState, type FormEvent } from "react";
-import { Loader2, CheckCircle2, ChevronDown } from "lucide-react";
+import { useRef, useState, type FormEvent } from "react";
+import { Loader2, ChevronDown } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import logo from "@/assets/logo.png";
+import { submitEnquiry } from "@/lib/enquiry.functions";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -12,9 +15,11 @@ const inputCls = "w-full rounded-xl border border-border bg-secondary/40 px-4 py
 const menuCls = "z-[60] border-border bg-[#080808] text-foreground";
 
 type Errors = Record<string, string>;
-const ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined;
 
-export default function ConnectForm({ onClose }: { onClose: () => void }) {
+export default function ConnectForm({ onSuccess }: { onSuccess?: () => void }) {
+  const send = useServerFn(submitEnquiry);
+  const startedAt = useRef(Date.now());
+  const [hp, setHp] = useState("");
   const [v, setV] = useState({ firstName: "", lastName: "", email: "", phone: "", company: "", country: "", website: "", message: "" });
   const [role, setRole] = useState("");
   const [caps, setCaps] = useState<string[]>([]);
@@ -36,30 +41,28 @@ export default function ConnectForm({ onClose }: { onClose: () => void }) {
       return;
     }
     setErrors({});
-    if (!ENDPOINT) { setFormError("Form not connected yet. Submissions can't be sent until the form service is set up."); return; }
+    if (status === "sending") return;
     setStatus("sending");
     try {
-      const d = parsed.data;
-      const res = await fetch(ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ ...d, capabilities: d.capabilities.join(", "), _replyto: d.email, _subject: `New enquiry from ${d.firstName} ${d.lastName}` }),
-      });
+      const res = await send({ data: { enquiry: parsed.data, website2: hp, startedAt: startedAt.current } });
       if (!res.ok) throw new Error();
       setStatus("done");
+      onSuccess?.();
     } catch {
       setStatus("idle");
-      setFormError("Something went wrong sending your enquiry. Please try again.");
+      setFormError("We couldn't send your enquiry. Please try again.");
     }
   }
 
   if (status === "done")
     return (
-      <div className="mt-10 flex flex-col items-center py-10 text-center">
-        <CheckCircle2 className="h-14 w-14 text-brand-lime" />
-        <h3 className="mt-6 font-body text-2xl font-bold">Thank you — we'll be in touch</h3>
-        <p className="mt-3 max-w-md text-sm text-muted-foreground">Your enquiry has reached the Virtual Upswing team.</p>
-        <Button type="button" variant="ghost" onClick={onClose} className="mt-8 h-auto rounded-full bg-brand-offwhite px-7 py-3 text-sm font-medium text-background hover:bg-brand-lime hover:text-background">Close</Button>
+      <div className="flex flex-col items-center py-10 text-center">
+        <h2 className="font-body text-3xl font-bold md:text-4xl"><span className="text-gradient">Thank You!</span></h2>
+        <p className="mt-4 text-lg font-medium text-foreground">Your enquiry has been received.</p>
+        <p className="mt-4 max-w-md text-sm text-muted-foreground md:text-base">Thank you for reaching out to Virtual Upswing. We appreciate your interest in connecting with us.</p>
+        <p className="mt-3 max-w-md text-sm text-muted-foreground md:text-base">Our team will review your enquiry and get in touch with you soon.</p>
+        <img src={logo} alt="Virtual Upswing logo" className="mt-10 h-16 w-16 rounded-full" />
+        <p className="mt-4 text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Engineering Autonomous Operations</p>
       </div>
     );
 
@@ -74,6 +77,7 @@ export default function ConnectForm({ onClose }: { onClose: () => void }) {
 
   return (
     <form onSubmit={submit} noValidate className="mt-8 space-y-8">
+      <input type="text" name="website2" value={hp} onChange={(e) => setHp(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 opacity-0" />
       <fieldset>
         <legend className="mb-4 text-xs uppercase tracking-[0.25em] text-brand-teal">Contact details</legend>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
