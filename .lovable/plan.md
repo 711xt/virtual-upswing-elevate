@@ -5,9 +5,9 @@
 - It currently posts from the browser to a Formspree address that was never set, so it shows "Form not connected yet". There is no server code yet.
 - Validation rules live in `src/lib/connect-schema.ts` (with tests). They stay unchanged.
 
-## 1. What you need to provide (secrets)
-- `GOOGLE_SHEETS_WEBAPP_URL`: your Apps Script Web App URL (the `https://script.google.com/macros/s/.../exec` link). I'll ask for it through a secure form, never in code.
-- `GOOGLE_SHEETS_SHARED_TOKEN`: a random token generated in the same secure form. You paste it into your Apps Script so the script only accepts rows from this website. I'll give you a 5-line snippet showing where it goes.
+## 1. Secrets (already created)
+- `GOOGLE_SHEETS_WEBAPP_URL` and `GOOGLE_SHEETS_SHARED_TOKEN` exist in the project. They are read only inside the server function, never in browser code.
+- Apps Script check: the script's `doPost(e)` parses the JSON body, compares `body.token` with the token stored in its Script Properties (`SHARED_TOKEN`), and returns `{"ok":false,"error":"unauthorized"}` without writing if they differ. On a match it appends the row and returns `{"ok":true}`. I'll give you this snippet to paste and redeploy (Deploy > Manage deployments > new version, access "Anyone").
 
 ## 2. Server-side submission
 - New server function `submitEnquiry` (in `src/lib/enquiry.functions.ts`) runs on the server only:
@@ -47,5 +47,9 @@
 - Tests pass for the column order, `New` status and spam checks.
 - With your secrets in place: one real test submission, then confirm the row appears in your sheet (you check it, or share access) and the thank-you screen shows. Also confirm a failed send keeps the details.
 
-## Still open separately
-- The hidden centre-logo link to `/connect` from the earlier brief is not built yet. Tell me if you still want it.
+## How we test
+1. I check the secrets are present (names only).
+2. I send one test enquiry through /connect and confirm the thank-you screen.
+3. You open the sheet and confirm a new row with the date and status "New"; then delete that test row.
+4. I send one with a wrong token on purpose (test only) to confirm the form shows the error and keeps the details.
+Nothing is reported as working until steps 2 and 3 succeed.
