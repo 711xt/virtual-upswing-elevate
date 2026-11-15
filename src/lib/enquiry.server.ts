@@ -9,7 +9,7 @@ export const MIN_FILL_MS = 3000;
 export function buildRow(d: Enquiry, now: Date = new Date()): string[] {
   return [
     now.toISOString(),
-    d.firstName, d.lastName, d.email, d.phone, d.company, d.country, d.website,
+    d.firstName, d.lastName, d.email, `${d.phoneCode} ${d.phone}`, d.company, d.country, d.website,
     d.role, d.capabilities.join(", "), d.message, "New",
   ];
 }

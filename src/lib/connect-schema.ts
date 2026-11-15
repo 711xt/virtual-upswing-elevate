@@ -38,6 +38,7 @@ export const connectSchema = z
     firstName: req("First name"),
     lastName: req("Last name"),
     email: req("Business email", 255).email({ message: "Enter a valid email address" }),
+    phoneCode: z.string().trim().regex(/^\+\d{1,4}$/, { message: "Select a country code" }),
     phone: req("Phone / WhatsApp", 30).regex(/^[+\d][\d\s().-]{5,}$/, { message: "Enter a valid phone number" }),
     company: req("Company name", 150),
     country: req("Country"),

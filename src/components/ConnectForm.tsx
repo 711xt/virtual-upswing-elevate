@@ -1,4 +1,4 @@
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Loader2, ChevronDown } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import logo from "@/assets/logo.png";
@@ -6,6 +6,8 @@ import { submitEnquiry } from "@/lib/enquiry.functions";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { DIAL_COUNTRIES } from "@/lib/countries";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CAPABILITIES, ROLES, connectSchema, needsCapabilities, nextCapabilities } from "@/lib/connect-schema";
 
@@ -27,13 +29,31 @@ export default function ConnectForm({ onSuccess }: { onSuccess?: () => void }) {
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "done">("idle");
   const [formError, setFormError] = useState("");
+  const [phoneCode, setPhoneCode] = useState("");
+  const [codeIso, setCodeIso] = useState("");
+  const [codeOpen, setCodeOpen] = useState(false);
+  const [countryOpen, setCountryOpen] = useState(false);
+  const [capsOpen, setCapsOpen] = useState(false);
+  const capsRef = useRef<HTMLDivElement>(null);
+  const sendingRef = useRef(false);
+
+  // Close the capabilities list when the page itself scrolls (not when scrolling inside the list).
+  useEffect(() => {
+    if (!capsOpen) return;
+    const onScroll = (e: Event) => {
+      if (capsRef.current && e.target instanceof Node && capsRef.current.contains(e.target)) return;
+      setCapsOpen(false);
+    };
+    window.addEventListener("scroll", onScroll, { capture: true, passive: true });
+    return () => window.removeEventListener("scroll", onScroll, { capture: true });
+  }, [capsOpen]);
 
   const set = (k: keyof typeof v) => (e: { target: { value: string } }) => setV({ ...v, [k]: e.target.value });
 
   async function submit(e: FormEvent) {
     e.preventDefault();
     setFormError("");
-    const parsed = connectSchema.safeParse({ ...v, role: role || undefined, capabilities: needsCapabilities(role) ? caps : [], consent });
+    const parsed = connectSchema.safeParse({ ...v, phoneCode, role: role || undefined, capabilities: needsCapabilities(role) ? caps : [], consent });
     if (!parsed.success) {
       const errs: Errors = {};
       parsed.error.issues.forEach((i) => { const k = String(i.path[0]); if (!errs[k]) errs[k] = i.message; });
@@ -41,7 +61,8 @@ export default function ConnectForm({ onSuccess }: { onSuccess?: () => void }) {
       return;
     }
     setErrors({});
-    if (status === "sending") return;
+    if (sendingRef.current) return;
+    sendingRef.current = true;
     setStatus("sending");
     try {
       const res = await send({ data: { enquiry: parsed.data, website2: hp, startedAt: startedAt.current } });
@@ -49,6 +70,7 @@ export default function ConnectForm({ onSuccess }: { onSuccess?: () => void }) {
       setStatus("done");
       onSuccess?.();
     } catch {
+      sendingRef.current = false;
       setStatus("idle");
       setFormError("We couldn't send your enquiry. Please try again.");
     }
@@ -84,14 +106,57 @@ export default function ConnectForm({ onSuccess }: { onSuccess?: () => void }) {
           {field("firstName", "First Name")}
           {field("lastName", "Last Name")}
           {field("email", "Business Email", "email")}
-          {field("phone", "Phone / WhatsApp", "tel")}
+          <div>
+            <label htmlFor="c-phone" className="mb-1.5 block text-xs text-muted-foreground">Phone / WhatsApp *</label>
+            <div className="flex gap-2">
+              <Popover open={codeOpen} onOpenChange={setCodeOpen}>
+                <PopoverTrigger asChild>
+                  <button type="button" aria-label="Country calling code" aria-invalid={!!errors.phoneCode} className={`${inputCls} flex w-auto shrink-0 items-center gap-1.5 whitespace-nowrap`}>
+                    {phoneCode ? <span>{DIAL_COUNTRIES.find((c) => c.dial === phoneCode && c.iso === codeIso)?.flag} {phoneCode}</span> : <span className="text-muted-foreground/70">Code</span>}
+                    <ChevronDown className="h-4 w-4 opacity-60" />
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent align="start" className={`${menuCls} w-72 p-0`}>
+                  <Command className="bg-transparent">
+                    <CommandInput placeholder="Search country or code" autoFocus />
+                    <CommandList className="max-h-[45vh]">
+                      <CommandEmpty>No match</CommandEmpty>
+                      {DIAL_COUNTRIES.map((c) => (
+                        <CommandItem key={c.iso} value={`${c.name} ${c.dial} ${c.dial.slice(1)}`} onSelect={() => { setPhoneCode(c.dial); setCodeIso(c.iso); setCodeOpen(false); }}>
+                          <span>{c.flag}</span><span className="flex-1">{c.name}</span><span className="text-muted-foreground">{c.dial}</span>
+                        </CommandItem>
+                      ))}
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+              <input id="c-phone" type="tel" value={v.phone} onChange={set("phone")} maxLength={30} className={inputCls} aria-invalid={!!errors.phone} />
+            </div>
+            <Err k="phoneCode" />
+            <Err k="phone" />
+          </div>
           {field("company", "Company Name")}
           <div>
             <label htmlFor="c-country" className="mb-1.5 block text-xs text-muted-foreground">Country *</label>
-            <select id="c-country" value={v.country} onChange={set("country")} className={inputCls}>
-              <option value="">Select country</option>
-              {COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
-            </select>
+            <Popover open={countryOpen} onOpenChange={setCountryOpen}>
+              <PopoverTrigger asChild>
+                <button id="c-country" type="button" aria-invalid={!!errors.country} className={`${inputCls} flex items-center justify-between gap-3 text-left`}>
+                  {v.country ? <span>{v.country}</span> : <span className="text-muted-foreground/70">Select country</span>}
+                  <ChevronDown className="h-4 w-4 shrink-0 opacity-60" />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent align="start" className={`${menuCls} w-[var(--radix-popover-trigger-width)] p-0`}>
+                <Command className="bg-transparent">
+                  <CommandInput placeholder="Search country" autoFocus />
+                  <CommandList className="max-h-[45vh]">
+                    <CommandEmpty>No match</CommandEmpty>
+                    {COUNTRIES.map((c) => (
+                      <CommandItem key={c} value={c} onSelect={() => { setV({ ...v, country: c }); setCountryOpen(false); }}>{c}</CommandItem>
+                    ))}
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
             <Err k="country" />
           </div>
           <div className="sm:col-span-2">{field("website", "Company Website", "url", "example.com")}</div>
@@ -113,7 +178,7 @@ export default function ConnectForm({ onSuccess }: { onSuccess?: () => void }) {
         {needsCapabilities(role) && (
           <div className="mt-6 animate-in fade-in slide-in-from-top-2 duration-300">
             <label htmlFor="c-caps" className="mb-1.5 block text-xs text-muted-foreground">Which solutions or capabilities do you support? *</label>
-            <Popover>
+            <Popover open={capsOpen} onOpenChange={setCapsOpen}>
               <PopoverTrigger asChild>
                 <button id="c-caps" type="button" aria-invalid={!!errors.capabilities} className={`${inputCls} flex items-center justify-between gap-3 text-left`}>
                   {caps.length === 0 ? <span className="text-muted-foreground/70">Select your capabilities</span> : (
@@ -124,7 +189,7 @@ export default function ConnectForm({ onSuccess }: { onSuccess?: () => void }) {
                   <ChevronDown className="h-4 w-4 shrink-0 opacity-60" />
                 </button>
               </PopoverTrigger>
-              <PopoverContent align="start" className={`${menuCls} w-[var(--radix-popover-trigger-width)] p-1`}>
+              <PopoverContent ref={capsRef} align="start" className={`${menuCls} w-[var(--radix-popover-trigger-width)] p-1`}>
                 {CAPABILITIES.map((c) => {
                   const on = caps.includes(c);
                   return (
