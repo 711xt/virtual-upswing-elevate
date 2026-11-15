@@ -8,8 +8,9 @@
 
 **Fix:**
 - Server function sends each value under every reasonable name: the current names, the sheet-header names (`"Business Email"`, `"Phone / WhatsApp"`, `"Company Name"`, `"Company Website"`), and camelCase forms (`businessEmail`, `phoneWhatsapp`, `companyName`, `companyWebsite`). The `row` array stays as is.
-- I also give you a short replacement `doPost` that writes `body.row` directly (order already matches your columns), so names can never drift again. Using it is optional.
-- No sheet columns change.
+- Your existing `doPost` handler, its shared-token check and all server-side safeguards (validation, spam checks, secrets kept on the server) stay exactly as they are. Nothing in the script is replaced or bypassed.
+- If your script reads names other than those above, you paste its `doPost` here (no token), and I match the server payload to the exact names it reads, changing nothing else.
+- Column order and sheet structure stay unchanged.
 
 ## 2. Phone input layout (`ConnectForm.tsx`, phone block only)
 - Code button: drop the inherited full width; fixed compact width (about 6.5rem desktop, 6rem phone) fits a flag, "+971" and the arrow; `shrink-0`, same padding/height/border/background as other fields.
@@ -27,7 +28,7 @@
 
 ## Testing
 1. Run existing and new tests.
-2. Send one test enquiry ("TEST Lovable") and ask you to confirm all 12 columns are filled, then delete it. If the four are still blank, I'll ask you to paste your script's `doPost` (no secret) or use my snippet.
+2. Send one test enquiry ("TEST Lovable") and ask you to confirm all 12 columns are filled, then delete it. If the four are still blank, I'll ask you to paste your script's `doPost` (no token) and match the names exactly.
 3. Test browser at 1280px and 390px: measure that the code button is compact, the number input fills the rest, a 15-digit number stays inside, nothing overflows.
 4. Fill Company Name/Website (and simulate autofill) and check the background stays dark.
 5. Nothing else on the form or site changes.
