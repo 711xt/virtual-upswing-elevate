@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { connectSchema } from "./connect-schema";
-import { buildRow, isSpam } from "./enquiry.server";
+import { buildFields, buildRow, isSpam } from "./enquiry.server";
 
 type Input = { enquiry: unknown; website2?: string; startedAt: number };
 
@@ -14,13 +14,12 @@ export const submitEnquiry = createServerFn({ method: "POST" })
     const token = process.env["GOOGLE_SHEETS_SHARED_TOKEN"];
     if (!url || !token) { console.error("Enquiry: Google Sheets secrets missing"); return { ok: false }; }
     const row = buildRow(parsed.data);
-    const keys = ["submissionDate","firstName","lastName","email","phone","company","country","website","organisationType","capabilities","requirements","leadStatus"];
-    const fields = Object.fromEntries(keys.map((k, i) => [k, row[i]]));
+    const fields = buildFields(row);
     try {
       const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ token, row, ...fields }),
+        body: JSON.stringify({ ...fields, token, row }),
         redirect: "follow",
         signal: AbortSignal.timeout(15000),
       });

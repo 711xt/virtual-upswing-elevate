@@ -13,7 +13,7 @@ import { CAPABILITIES, ROLES, connectSchema, needsCapabilities, nextCapabilities
 
 const COUNTRIES = ["Argentina","Australia","Austria","Bangladesh","Belgium","Brazil","Canada","Chile","China","Colombia","Czech Republic","Denmark","Egypt","Finland","France","Germany","Greece","Hong Kong","Hungary","India","Indonesia","Ireland","Israel","Italy","Japan","Kenya","Malaysia","Mexico","Netherlands","New Zealand","Nigeria","Norway","Pakistan","Philippines","Poland","Portugal","Qatar","Romania","Saudi Arabia","Singapore","South Africa","South Korea","Spain","Sri Lanka","Sweden","Switzerland","Taiwan","Thailand","Turkey","Ukraine","United Arab Emirates","United Kingdom","United States","Vietnam","Other"];
 
-const inputCls = "w-full rounded-xl border border-border bg-secondary/40 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 outline-none transition focus:border-brand-teal focus:ring-1 focus:ring-brand-teal";
+const inputCls = "w-full rounded-xl border border-border bg-secondary/40 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 outline-none transition focus:border-brand-teal focus:ring-1 focus:ring-brand-teal [&:-webkit-autofill]:[-webkit-text-fill-color:var(--foreground)] [&:-webkit-autofill]:shadow-[inset_0_0_0_1000px_#141414] [&:-webkit-autofill]:[transition:background-color_9999s_ease-out] [&:-webkit-autofill]:[caret-color:var(--foreground)]";
 const menuCls = "z-[60] border-border bg-[#080808] text-foreground";
 
 type Errors = Record<string, string>;
@@ -111,7 +111,7 @@ export default function ConnectForm({ onSuccess }: { onSuccess?: () => void }) {
             <div className="flex gap-2">
               <Popover open={codeOpen} onOpenChange={setCodeOpen}>
                 <PopoverTrigger asChild>
-                  <button type="button" aria-label="Country calling code" aria-invalid={!!errors.phoneCode} className={`${inputCls} flex w-auto shrink-0 items-center gap-1.5 whitespace-nowrap`}>
+                  <button type="button" aria-label="Country calling code" aria-invalid={!!errors.phoneCode} className={`${inputCls} flex !w-24 shrink-0 items-center justify-between gap-1 whitespace-nowrap !px-3 sm:!w-[6.5rem]`}>
                     {phoneCode ? <span>{DIAL_COUNTRIES.find((c) => c.dial === phoneCode && c.iso === codeIso)?.flag} {phoneCode}</span> : <span className="text-muted-foreground/70">Code</span>}
                     <ChevronDown className="h-4 w-4 opacity-60" />
                   </button>
@@ -130,7 +130,7 @@ export default function ConnectForm({ onSuccess }: { onSuccess?: () => void }) {
                   </Command>
                 </PopoverContent>
               </Popover>
-              <input id="c-phone" type="tel" value={v.phone} onChange={set("phone")} maxLength={30} className={inputCls} aria-invalid={!!errors.phone} />
+              <input id="c-phone" type="tel" value={v.phone} onChange={set("phone")} maxLength={30} className={`${inputCls} min-w-0 flex-1`} aria-invalid={!!errors.phone} />
             </div>
             <Err k="phoneCode" />
             <Err k="phone" />
