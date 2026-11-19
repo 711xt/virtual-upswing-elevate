@@ -16,6 +16,8 @@ const COUNTRIES = ["Argentina","Australia","Austria","Bangladesh","Belgium","Bra
 const inputCls = "w-full rounded-xl border border-border bg-secondary/40 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 outline-none transition focus:border-brand-teal focus:ring-1 focus:ring-brand-teal [&:-webkit-autofill]:[-webkit-text-fill-color:var(--foreground)] [&:-webkit-autofill]:shadow-[inset_0_0_0_1000px_#141414] [&:-webkit-autofill]:[transition:background-color_9999s_ease-out] [&:-webkit-autofill]:[caret-color:var(--foreground)] max-sm:text-base max-sm:[&:autofill]:shadow-[inset_0_0_0_1000px_#141414] max-sm:[&:autofill]:[-webkit-text-fill-color:var(--foreground)] max-sm:[&:-webkit-autofill:focus]:shadow-[inset_0_0_0_1000px_#141414] max-sm:[&:-webkit-autofill:hover]:shadow-[inset_0_0_0_1000px_#141414]";
 const menuCls = "z-[60] border-border bg-[#080808] text-foreground";
 
+const EMAIL_AUTOFILL = "max-sm:[&:-webkit-autofill]:!shadow-[inset_0_0_0_1000px_#141414] max-sm:[&:-webkit-autofill]:![-webkit-text-fill-color:var(--foreground)] max-sm:[&:-webkit-autofill]:![caret-color:var(--foreground)] max-sm:[&:-webkit-autofill]:![transition:background-color_9999s_ease-out] max-sm:[&:-webkit-autofill:focus]:!shadow-[inset_0_0_0_1000px_#141414] max-sm:[&:-webkit-autofill:focus]:![-webkit-text-fill-color:var(--foreground)] max-sm:[&:-webkit-autofill:focus]:![caret-color:var(--foreground)] max-sm:[&:-webkit-autofill:focus]:![transition:background-color_9999s_ease-out] max-sm:[&:-webkit-autofill:hover]:!shadow-[inset_0_0_0_1000px_#141414] max-sm:[&:-webkit-autofill:hover]:![-webkit-text-fill-color:var(--foreground)] max-sm:[&:-webkit-autofill:hover]:![caret-color:var(--foreground)] max-sm:[&:-webkit-autofill:hover]:![transition:background-color_9999s_ease-out] max-sm:[&:-webkit-autofill:active]:!shadow-[inset_0_0_0_1000px_#141414] max-sm:[&:-webkit-autofill:active]:![-webkit-text-fill-color:var(--foreground)] max-sm:[&:-webkit-autofill:active]:![caret-color:var(--foreground)] max-sm:[&:-webkit-autofill:active]:![transition:background-color_9999s_ease-out] max-sm:[&:autofill]:!shadow-[inset_0_0_0_1000px_#141414] max-sm:[&:autofill]:![-webkit-text-fill-color:var(--foreground)] max-sm:[&:autofill]:![caret-color:var(--foreground)] max-sm:[&:autofill]:![transition:background-color_9999s_ease-out] max-sm:[&:autofill:focus]:!shadow-[inset_0_0_0_1000px_#141414] max-sm:[&:autofill:focus]:![-webkit-text-fill-color:var(--foreground)] max-sm:[&:autofill:focus]:![caret-color:var(--foreground)] max-sm:[&:autofill:focus]:![transition:background-color_9999s_ease-out]";
+
 type Errors = Record<string, string>;
 
 export default function ConnectForm({ onSuccess }: { onSuccess?: () => void }) {
@@ -89,10 +91,10 @@ export default function ConnectForm({ onSuccess }: { onSuccess?: () => void }) {
     );
 
   const Err = ({ k }: { k: string }) => (errors[k] ? <p className="mt-1.5 text-xs text-destructive">{errors[k]}</p> : null);
-  const field = (k: keyof typeof v, label: string, type = "text", ph = "") => (
+  const field = (k: keyof typeof v, label: string, type = "text", ph = "", extra = "") => (
     <div>
       <label htmlFor={`c-${k}`} className="mb-1.5 block text-xs text-muted-foreground">{label} *</label>
-      <input id={`c-${k}`} type={type} value={v[k]} onChange={set(k)} placeholder={ph} maxLength={255} className={inputCls} aria-invalid={!!errors[k]} />
+      <input id={`c-${k}`} type={type} value={v[k]} onChange={set(k)} placeholder={ph} maxLength={255} className={`${inputCls} ${extra}`} aria-invalid={!!errors[k]} />
       <Err k={k} />
     </div>
   );
@@ -105,7 +107,7 @@ export default function ConnectForm({ onSuccess }: { onSuccess?: () => void }) {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {field("firstName", "First Name")}
           {field("lastName", "Last Name")}
-          {field("email", "Business Email", "email")}
+          {field("email", "Business Email", "email", "", EMAIL_AUTOFILL)}
           <div>
             <label htmlFor="c-phone" className="mb-1.5 block text-xs text-muted-foreground">Phone / WhatsApp *</label>
             <div className="flex gap-2">

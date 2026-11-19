@@ -20,7 +20,9 @@ export default function Footer() {
           <div className="text-center text-xs text-white/35">
             © 2026 Virtual Upswing. All rights reserved.
           </div>
-          <div />
+          <div className="text-center md:text-right">
+            <a href="mailto:contact@virtualupswing.com" className="break-all text-[11px] tracking-[0.15em] text-white/40 transition-colors hover:text-white/60">contact@virtualupswing.com</a>
+          </div>
         </div>
       </div>
     </footer>
