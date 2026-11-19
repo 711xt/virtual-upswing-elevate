@@ -13,7 +13,7 @@ import { CAPABILITIES, ROLES, connectSchema, needsCapabilities, nextCapabilities
 
 const COUNTRIES = ["Argentina","Australia","Austria","Bangladesh","Belgium","Brazil","Canada","Chile","China","Colombia","Czech Republic","Denmark","Egypt","Finland","France","Germany","Greece","Hong Kong","Hungary","India","Indonesia","Ireland","Israel","Italy","Japan","Kenya","Malaysia","Mexico","Netherlands","New Zealand","Nigeria","Norway","Pakistan","Philippines","Poland","Portugal","Qatar","Romania","Saudi Arabia","Singapore","South Africa","South Korea","Spain","Sri Lanka","Sweden","Switzerland","Taiwan","Thailand","Turkey","Ukraine","United Arab Emirates","United Kingdom","United States","Vietnam","Other"];
 
-const inputCls = "w-full rounded-xl border border-border bg-secondary/40 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 outline-none transition focus:border-brand-teal focus:ring-1 focus:ring-brand-teal [&:-webkit-autofill]:[-webkit-text-fill-color:var(--foreground)] [&:-webkit-autofill]:shadow-[inset_0_0_0_1000px_#141414] [&:-webkit-autofill]:[transition:background-color_9999s_ease-out] [&:-webkit-autofill]:[caret-color:var(--foreground)]";
+const inputCls = "w-full rounded-xl border border-border bg-secondary/40 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 outline-none transition focus:border-brand-teal focus:ring-1 focus:ring-brand-teal [&:-webkit-autofill]:[-webkit-text-fill-color:var(--foreground)] [&:-webkit-autofill]:shadow-[inset_0_0_0_1000px_#141414] [&:-webkit-autofill]:[transition:background-color_9999s_ease-out] [&:-webkit-autofill]:[caret-color:var(--foreground)] max-sm:text-base max-sm:[&:autofill]:shadow-[inset_0_0_0_1000px_#141414] max-sm:[&:autofill]:[-webkit-text-fill-color:var(--foreground)] max-sm:[&:-webkit-autofill:focus]:shadow-[inset_0_0_0_1000px_#141414] max-sm:[&:-webkit-autofill:hover]:shadow-[inset_0_0_0_1000px_#141414]";
 const menuCls = "z-[60] border-border bg-[#080808] text-foreground";
 
 type Errors = Record<string, string>;
@@ -118,7 +118,7 @@ export default function ConnectForm({ onSuccess }: { onSuccess?: () => void }) {
                 </PopoverTrigger>
                 <PopoverContent align="start" className={`${menuCls} w-72 p-0`}>
                   <Command className="bg-transparent">
-                    <CommandInput placeholder="Search country or code" autoFocus />
+                    <CommandInput className="max-sm:text-base" placeholder="Search country or code" autoFocus />
                     <CommandList className="max-h-[45vh]">
                       <CommandEmpty>No match</CommandEmpty>
                       {DIAL_COUNTRIES.map((c) => (
@@ -147,7 +147,7 @@ export default function ConnectForm({ onSuccess }: { onSuccess?: () => void }) {
               </PopoverTrigger>
               <PopoverContent align="start" className={`${menuCls} w-[var(--radix-popover-trigger-width)] p-0`}>
                 <Command className="bg-transparent">
-                  <CommandInput placeholder="Search country" autoFocus />
+                  <CommandInput className="max-sm:text-base" placeholder="Search country" autoFocus />
                   <CommandList className="max-h-[45vh]">
                     <CommandEmpty>No match</CommandEmpty>
                     {COUNTRIES.map((c) => (
@@ -225,7 +225,7 @@ export default function ConnectForm({ onSuccess }: { onSuccess?: () => void }) {
       {formError && <p className="rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-foreground">{formError}</p>}
 
       <Button type="submit" variant="ghost" disabled={status === "sending"}
-        className="h-auto w-full rounded-full bg-brand-offwhite px-7 py-3.5 text-sm font-medium text-background transition-all hover:bg-brand-lime hover:text-background hover:shadow-[var(--glow-lime)] sm:w-auto">
+        className="h-auto w-full rounded-full bg-brand-offwhite px-7 py-3.5 text-sm font-medium text-background transition-all hover:bg-brand-lime hover:text-background hover:shadow-[var(--glow-lime)] sm:w-auto [@media(hover:none)]:active:bg-brand-lime [@media(hover:none)]:active:shadow-[var(--glow-lime)]">
         {status === "sending" ? <><Loader2 className="h-4 w-4 animate-spin" /> Sending…</> : <>Submit Enquiry <span>→</span></>}
       </Button>
     </form>
